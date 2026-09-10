@@ -1,0 +1,123 @@
+{
+  "name": "Retail AI Sales Agent - Public Adapter",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "retail-agent-demo",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook",
+      "name": "Incoming webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "session",
+              "name": "session_id",
+              "value": "={{ $json.body.session_id }}",
+              "type": "string"
+            },
+            {
+              "id": "request",
+              "name": "request_id",
+              "value": "={{ $json.body.event_id }}",
+              "type": "string"
+            },
+            {
+              "id": "message",
+              "name": "message",
+              "value": "={{ $json.body.message }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "normalize",
+      "name": "Normalize event",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [240, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://agent-api:8000/v1/chat",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "agent-api",
+      "name": "Call guarded agent",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [480, 0]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {"caseSensitive": true, "typeValidation": "strict"},
+          "conditions": [
+            {
+              "id": "handoff-condition",
+              "leftValue": "={{ $json.action }}",
+              "rightValue": "human_handoff",
+              "operator": {"type": "string", "operation": "equals"}
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "handoff-if",
+      "name": "Needs human?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [720, 0]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {}
+      },
+      "id": "response",
+      "name": "Return channel action",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [960, 0]
+    }
+  ],
+  "connections": {
+    "Incoming webhook": {
+      "main": [[{"node": "Normalize event", "type": "main", "index": 0}]]
+    },
+    "Normalize event": {
+      "main": [[{"node": "Call guarded agent", "type": "main", "index": 0}]]
+    },
+    "Call guarded agent": {
+      "main": [[{"node": "Needs human?", "type": "main", "index": 0}]]
+    },
+    "Needs human?": {
+      "main": [
+        [{"node": "Return channel action", "type": "main", "index": 0}],
+        [{"node": "Return channel action", "type": "main", "index": 0}]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {"executionOrder": "v1"},
+  "versionId": "00000000-0000-0000-0000-000000000001",
+  "meta": {"templateCredsSetupCompleted": false},
+  "tags": []
+}
+

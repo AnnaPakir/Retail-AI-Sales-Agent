@@ -1,0 +1,23 @@
+### Health check
+GET http://127.0.0.1:8000/health
+
+### Consultation followed by an explicit sales confirmation
+POST http://127.0.0.1:8000/v1/chat
+Content-Type: application/json
+
+{
+  "session_id": "demo-42",
+  "request_id": "crm-event-1001",
+  "message": "Хочу купить D210, как будет доставка?"
+}
+
+### Second turn
+POST http://127.0.0.1:8000/v1/chat
+Content-Type: application/json
+
+{
+  "session_id": "demo-42",
+  "request_id": "crm-event-1002",
+  "message": "Да, оформляем"
+}
+

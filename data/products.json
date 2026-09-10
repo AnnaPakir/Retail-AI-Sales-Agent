@@ -1,0 +1,27 @@
+[
+  {
+    "id": "NW-A101",
+    "name": "Northstar Classic A101",
+    "aliases": ["A101", "Classic", "классик"],
+    "description": "классические часы в стальном корпусе, кварцевый механизм, минеральное стекло и кожаный ремешок",
+    "price_rub": 18900,
+    "available": true
+  },
+  {
+    "id": "NW-D210",
+    "name": "Northstar Diver D210",
+    "aliases": ["D210", "Diver", "дайвер"],
+    "description": "спортивные часы с автоматическим механизмом, стальным браслетом и водозащитой 200 метров",
+    "price_rub": 34900,
+    "available": true
+  },
+  {
+    "id": "NW-T300",
+    "name": "Northstar Titanium T300",
+    "aliases": ["T300", "Titanium", "титановые", "титан"],
+    "description": "лёгкие титановые часы с сапфировым стеклом и автоматическим механизмом; браслет также выполнен из титана",
+    "price_rub": 52700,
+    "available": false
+  }
+]
+
