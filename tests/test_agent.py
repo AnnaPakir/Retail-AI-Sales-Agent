@@ -10,16 +10,16 @@ def test_price_comes_from_typed_tool() -> None:
     assert result.tool_calls[0].arguments == {"product_id": "NW-A101"}
 
 
-def test_purchase_requires_two_explicit_steps() -> None:
+def test_purchase_intent_requires_explicit_handoff_confirmation() -> None:
     agent = SalesAgent()
     first = agent.handle(ChatRequest(session_id="sale", message="Хочу купить D210"))
-    second = agent.handle(ChatRequest(session_id="sale", message="Да, оформляем"))
+    second = agent.handle(ChatRequest(session_id="sale", message="Да, передайте оператору"))
     assert first.action is Action.ASK_CONFIRMATION
     assert second.action is Action.HUMAN_HANDOFF
     assert second.intent is Intent.PURCHASE_CONFIRMATION
 
 
-def test_thanks_does_not_confirm_purchase() -> None:
+def test_thanks_does_not_confirm_handoff() -> None:
     agent = SalesAgent()
     agent.handle(ChatRequest(session_id="close", message="Хочу купить D210"))
     result = agent.handle(ChatRequest(session_id="close", message="Спасибо"))

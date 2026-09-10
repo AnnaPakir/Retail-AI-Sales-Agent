@@ -2,7 +2,7 @@
 
 Sanitized prototype of an AI-assisted retail sales agent.
 
-This repository is a clean public reconstruction of a retail assistant workflow. It shows how a chat-based sales agent can combine deterministic routing, retrieval from a small knowledge base, typed tools for commercial facts, human handoff rules, traces, and regression tests.
+This repository is a clean public reconstruction of a retail assistant workflow. It shows how a chat-based assistant can combine deterministic routing, retrieval from a small knowledge base, typed tools for commercial facts, human handoff rules, traces, and regression tests.
 
 The project does not include real customer conversations, tokens, internal URLs, CRM schemas, brand data, or production exports. Product records and knowledge base documents are synthetic.
 
@@ -13,7 +13,7 @@ The project does not include real customer conversations, tokens, internal URLs,
 
 ### Назначение
 
-Проект показывает прототип AI-консультанта для розничных продаж. Агент принимает сообщение клиента, определяет тип запроса и выбирает безопасное действие:
+Проект показывает прототип AI-консультанта для розничного магазина. Агент принимает сообщение клиента, определяет тип запроса и выбирает безопасное действие:
 
 - ответить по базе знаний;
 - проверить цену через типизированный инструмент;
@@ -22,6 +22,8 @@ The project does not include real customer conversations, tokens, internal URLs,
 - передать диалог оператору.
 
 Идея проекта не в том, чтобы заменить CRM или оператора, а в том, чтобы отделить рутинные ответы от случаев, где нужно решение человека.
+
+Агент не принимает оплату, не оформляет заказ самостоятельно и не назначает индивидуальные условия. Если клиент хочет продолжить с конкретной моделью, сервис передает диалог оператору вместе с проверенным контекстом.
 
 ### Что есть в репозитории
 
@@ -83,7 +85,7 @@ flowchart LR
 {
   "intent": "purchase",
   "action": "ask_confirmation",
-  "response": "Northstar Diver D210 есть в наличии, цена - 34 900 RUB. Хотите оформить заказ прямо сейчас?",
+  "response": "Northstar Diver D210 есть в наличии, цена - 34 900 RUB. Если хотите продолжить с этой моделью, я передам диалог оператору.",
   "tool_calls": [
     {"name": "get_price", "arguments": {"product_id": "NW-D210"}},
     {"name": "check_stock", "arguments": {"product_id": "NW-D210"}}
@@ -91,7 +93,7 @@ flowchart LR
 }
 ```
 
-После отдельного подтверждения API возвращает `human_handoff`. Закрывающие фразы вроде "спасибо" не считаются подтверждением покупки.
+После отдельного подтверждения API возвращает `human_handoff`. Закрывающие фразы вроде "спасибо" не считаются согласием на передачу оператору.
 
 ### Быстрый запуск
 
@@ -172,6 +174,8 @@ This project demonstrates a prototype of an AI-assisted retail sales agent. The 
 
 The goal is not to replace a CRM or a sales team. The goal is to show how routine answers can be separated from cases that require a human decision.
 
+The assistant does not take payment, place orders by itself, or approve individual terms. If a customer wants to continue with a specific product, the service hands the conversation off to an operator with verified context.
+
 ### Repository Contents
 
 - FastAPI service with a chat endpoint;
@@ -232,7 +236,7 @@ Response:
 {
   "intent": "purchase",
   "action": "ask_confirmation",
-  "response": "Northstar Diver D210 is in stock, price is 34,900 RUB. Would you like to place the order now?",
+  "response": "Northstar Diver D210 is in stock, price is 34,900 RUB. If you want to continue with this model, I will hand the conversation off to an operator.",
   "tool_calls": [
     {"name": "get_price", "arguments": {"product_id": "NW-D210"}},
     {"name": "check_stock", "arguments": {"product_id": "NW-D210"}}
@@ -240,7 +244,7 @@ Response:
 }
 ```
 
-Only a separate explicit confirmation leads to `human_handoff`. Closing phrases such as "thanks" are not treated as purchase confirmation.
+Only a separate explicit confirmation leads to `human_handoff`. Closing phrases such as "thanks" are not treated as consent to involve an operator.
 
 ### Quick Start
 

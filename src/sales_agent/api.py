@@ -6,7 +6,7 @@ from .schemas import ChatRequest, ChatResponse, ExecutionTrace
 app = FastAPI(
     title="Retail AI Sales Agent",
     version="0.1.0",
-    description="Public, sanitized demo of a guarded retail sales agent.",
+    description="Public, sanitized demo of a guarded retail assistant workflow.",
 )
 agent = SalesAgent()
 

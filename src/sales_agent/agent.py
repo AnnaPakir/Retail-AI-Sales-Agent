@@ -112,7 +112,7 @@ class SalesAgent:
                     trace,
                     Intent.AMBIGUOUS,
                     Action.ASK_CLARIFICATION,
-                    "Уточните, пожалуйста, какую модель вы хотите оформить.",
+                    "Уточните, пожалуйста, какую модель вы рассматриваете.",
                 )
             trace.events.append(
                 TraceEvent(
@@ -124,8 +124,8 @@ class SalesAgent:
                 intent,
                 Action.HUMAN_HANDOFF,
                 (
-                    f"Отлично, передаю сотруднику заявку на {selected.name}. "
-                    "Он уточнит контакты и доставку."
+                    f"Передаю сотруднику диалог по {selected.name}. "
+                    "Он уточнит детали и поможет с оформлением."
                 ),
             )
 
@@ -233,7 +233,7 @@ class SalesAgent:
                 Action.ASK_CONFIRMATION,
                 (
                     f"{product.name} есть в наличии, цена — {price} ₽.{delivery_note} "
-                    "Хотите оформить заказ прямо сейчас?"
+                    "Если хотите продолжить с этой моделью, я передам диалог оператору."
                 ),
                 sources=sources,
                 tool_calls=[price_call, stock_call],

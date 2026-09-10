@@ -22,9 +22,20 @@ def route_message(message: str, *, awaiting_confirmation: bool = False) -> Route
     explicit_confirmation = bool(
         re.fullmatch(r"(?:да|беру|согласен|согласна)[.!]?", text)
         or _has(text, ("да, оформ", "да оформ", "оформляем", "оформляйте"))
+        or _has(
+            text,
+            (
+                "да, передайте",
+                "да передайте",
+                "передайте оператору",
+                "передай оператору",
+                "да, оператору",
+                "да оператору",
+            ),
+        )
     )
     if awaiting_confirmation and explicit_confirmation:
-        return Route(Intent.PURCHASE_CONFIRMATION, "confirmation after explicit sales CTA")
+        return Route(Intent.PURCHASE_CONFIRMATION, "confirmation after explicit operator handoff prompt")
 
     if _has(text, ("ты бот", "вы бот", "искусственный интеллект", "нейросеть")):
         return Route(Intent.TRANSPARENCY, "customer asked who they are speaking with")
@@ -68,7 +79,7 @@ def route_message(message: str, *, awaiting_confirmation: bool = False) -> Route
     if _has(text, ("спасибо", "понятно, спасибо", "до свидания", "всего доброго")) or re.fullmatch(
         r"[\s👍🙏🙂😊❤️❤]+", message
     ):
-        return Route(Intent.CLOSING, "polite closing is not a sales confirmation")
+        return Route(Intent.CLOSING, "polite closing is not an operator handoff confirmation")
 
     purchase = _has(
         text, ("хочу купить", "готов купить", "беру ", "заказать эту", "оформить покупку")

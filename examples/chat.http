@@ -1,7 +1,7 @@
 ### Health check
 GET http://127.0.0.1:8000/health
 
-### Consultation followed by an explicit sales confirmation
+### Consultation followed by an explicit operator handoff confirmation
 POST http://127.0.0.1:8000/v1/chat
 Content-Type: application/json
 
@@ -18,6 +18,5 @@ Content-Type: application/json
 {
   "session_id": "demo-42",
   "request_id": "crm-event-1002",
-  "message": "Да, оформляем"
+  "message": "Да, передайте оператору"
 }
-

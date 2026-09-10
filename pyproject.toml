@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "retail-ai-sales-agent"
 version = "0.1.0"
-description = "Sanitized, runnable case study of a production retail AI sales agent"
+description = "Sanitized prototype of an AI-assisted retail support workflow"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
