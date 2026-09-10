@@ -19,11 +19,11 @@ The project does not include real customer conversations, tokens, internal URLs,
 - проверить цену через типизированный инструмент;
 - проверить наличие через типизированный инструмент;
 - задать уточняющий вопрос;
-- передать диалог оператору.
+- передать вопрос специалисту.
 
-Идея проекта не в том, чтобы заменить CRM или оператора, а в том, чтобы отделить рутинные ответы от случаев, где нужно решение человека.
+Идея проекта не в том, чтобы заменить CRM или сотрудника, а в том, чтобы отделить рутинные ответы от случаев, где нужно решение человека.
 
-Агент не принимает оплату, не оформляет заказ самостоятельно и не назначает индивидуальные условия. Если клиент хочет продолжить с конкретной моделью, сервис передает диалог оператору вместе с проверенным контекстом.
+Агент не принимает оплату, не оформляет заказ самостоятельно и не назначает индивидуальные условия. Если клиент хочет продолжить с конкретной моделью, сервис передает вопрос специалисту вместе с проверенным контекстом.
 
 ### Что есть в репозитории
 
@@ -85,7 +85,7 @@ flowchart LR
 {
   "intent": "purchase",
   "action": "ask_confirmation",
-  "response": "Northstar Diver D210 есть в наличии, цена - 34 900 RUB. Если хотите продолжить с этой моделью, я передам диалог оператору.",
+  "response": "Northstar Diver D210 есть в наличии, цена - 34 900 RUB. Могу передать вопрос специалисту: он уточнит детали и поможет с оформлением.",
   "tool_calls": [
     {"name": "get_price", "arguments": {"product_id": "NW-D210"}},
     {"name": "check_stock", "arguments": {"product_id": "NW-D210"}}
@@ -93,7 +93,7 @@ flowchart LR
 }
 ```
 
-После отдельного подтверждения API возвращает `human_handoff`. Закрывающие фразы вроде "спасибо" не считаются согласием на передачу оператору.
+После отдельного подтверждения API возвращает `human_handoff`. Закрывающие фразы вроде "спасибо" не считаются согласием на передачу специалисту.
 
 ### Быстрый запуск
 
@@ -170,11 +170,11 @@ This project demonstrates a prototype of an AI-assisted retail sales agent. The 
 - check price through a typed tool;
 - check stock through a typed tool;
 - ask a clarification question;
-- hand the conversation off to a human operator.
+- pass the question to a human specialist.
 
 The goal is not to replace a CRM or a sales team. The goal is to show how routine answers can be separated from cases that require a human decision.
 
-The assistant does not take payment, place orders by itself, or approve individual terms. If a customer wants to continue with a specific product, the service hands the conversation off to an operator with verified context.
+The assistant does not take payment, place orders by itself, or approve individual terms. If a customer wants to continue with a specific product, the service passes the question to a human specialist with verified context.
 
 ### Repository Contents
 
@@ -236,7 +236,7 @@ Response:
 {
   "intent": "purchase",
   "action": "ask_confirmation",
-  "response": "Northstar Diver D210 is in stock, price is 34,900 RUB. If you want to continue with this model, I will hand the conversation off to an operator.",
+  "response": "Northstar Diver D210 is in stock, price is 34,900 RUB. I can pass the question to a specialist, who will help with the details and next steps.",
   "tool_calls": [
     {"name": "get_price", "arguments": {"product_id": "NW-D210"}},
     {"name": "check_stock", "arguments": {"product_id": "NW-D210"}}
@@ -244,7 +244,7 @@ Response:
 }
 ```
 
-Only a separate explicit confirmation leads to `human_handoff`. Closing phrases such as "thanks" are not treated as consent to involve an operator.
+Only a separate explicit confirmation leads to `human_handoff`. Closing phrases such as "thanks" are not treated as consent to involve a specialist.
 
 ### Quick Start
 

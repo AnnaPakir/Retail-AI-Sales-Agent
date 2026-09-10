@@ -13,7 +13,7 @@ def test_price_comes_from_typed_tool() -> None:
 def test_purchase_intent_requires_explicit_handoff_confirmation() -> None:
     agent = SalesAgent()
     first = agent.handle(ChatRequest(session_id="sale", message="Хочу купить D210"))
-    second = agent.handle(ChatRequest(session_id="sale", message="Да, передайте оператору"))
+    second = agent.handle(ChatRequest(session_id="sale", message="Да, передайте специалисту"))
     assert first.action is Action.ASK_CONFIRMATION
     assert second.action is Action.HUMAN_HANDOFF
     assert second.intent is Intent.PURCHASE_CONFIRMATION

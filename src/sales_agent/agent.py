@@ -92,7 +92,7 @@ class SalesAgent:
                 Intent.EXISTING_ORDER: "По действующему заказу нужен доступ сотрудника к CRM.",
                 Intent.REPAIR: "Индивидуальный случай ремонта должен проверить специалист.",
                 Intent.WHOLESALE: "Условия оптовой продажи согласует коммерческий отдел.",
-                Intent.DISCOUNT: "Индивидуальную скидку подтверждает сотрудник, а не бот.",
+                Intent.DISCOUNT: "Индивидуальные условия подтверждает сотрудник.",
                 Intent.SPARE_PARTS: "Наличие отдельной детали должен подтвердить специалист.",
             }
             self.states.clear(request.session_id)
@@ -100,7 +100,7 @@ class SalesAgent:
                 trace,
                 intent,
                 Action.HUMAN_HANDOFF,
-                f"{reasons[intent]} Передаю диалог оператору вместе с контекстом вопроса.",
+                f"{reasons[intent]} Передам вопрос специалисту вместе с контекстом.",
             )
 
         if intent is Intent.PURCHASE_CONFIRMATION:
@@ -124,7 +124,7 @@ class SalesAgent:
                 intent,
                 Action.HUMAN_HANDOFF,
                 (
-                    f"Передаю сотруднику диалог по {selected.name}. "
+                    f"Передам вопрос специалисту по {selected.name}. "
                     "Он уточнит детали и поможет с оформлением."
                 ),
             )
@@ -136,7 +136,7 @@ class SalesAgent:
                 Action.ANSWER,
                 (
                     "Да, я ИИ-консультант. Отвечаю по каталогу и правилам магазина. "
-                    "Если вопрос требует решения сотрудника, я передам диалог человеку."
+                    "Если вопрос требует решения сотрудника, я передам его специалисту."
                 ),
             )
 
@@ -233,7 +233,7 @@ class SalesAgent:
                 Action.ASK_CONFIRMATION,
                 (
                     f"{product.name} есть в наличии, цена — {price} ₽.{delivery_note} "
-                    "Если хотите продолжить с этой моделью, я передам диалог оператору."
+                    "Могу передать вопрос специалисту: он уточнит детали и поможет с оформлением."
                 ),
                 sources=sources,
                 tool_calls=[price_call, stock_call],
